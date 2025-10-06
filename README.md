@@ -1,6 +1,6 @@
 # PPE1-2025
 Dépôt individuel de PPE pour l'année 2025-2026.
-## Travail du 10 octobre 2025 
+## Travail du 6 octobre 2025 
 **Créer le dépôt dupuis Github**
 **Code**
 '''bash
