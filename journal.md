@@ -31,7 +31,7 @@ Dépôt individuel de PPE pour l'année 2025-2026.
     
 - Ensuite, je sais maintenant la différence entre un chemin absolu et un chemin relatif. De plus, certaines commandes sont très utiles, comme : `cd`, `ls`, `mkdir`, `mv`, `rm`.
   
-- Enfin, quand j'ai commencé les exercices, j'ai mal tapé `clear` pour effacer les anciens codes. Ensuite, j'ai cloné le dépôt Git dans mon dossier et vérifié le status de mon dossier.
+- Enfin, quand j'ai commencé les exercices, j'ai mal tapé `clear` pour effacer les anciens codes. Ensuite, j'ai trouvé que je connais pas très bien les commandes comme "git status, git log, git tag et git bush". 
   
 - Cependant, pour le moment, je ne connais pas bien Markdown, parce que c'est la première fois que j'utilise.
 
