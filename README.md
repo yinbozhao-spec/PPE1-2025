@@ -3,22 +3,23 @@ Dépôt individuel de PPE pour l'année 2025-2026.
 ## Travail du 10 octobre 2025 
 **Créer le dépôt dupuis Github**
 **Code**
-'388  git clone git@github.com:yinbozhao-spec/PPE1-2025.git'
-'389  clean'
-'390  clear'
-'391  cd ~/desktop/TAL/Plurital'
-'392  git clone git@github.com:yinbozhao-spec/PPE1-2025.git'
-'393  cd PPE-2025/'
-'394  cd ./PPE-2025/'
-'395  cd PPE1-2025'
-'396  git status'
-'397  git log'
-'398  q'
-'399  history'
-'400  git status'
-'401  git tag -a gitinto -m "version finie intro git"\n'
-'402  git tag'
-'403  git push origin gitinto'
+'''bash
+- 388  git clone git@github.com:yinbozhao-spec/PPE1-2025.git
+- 389  clean
+- 390  clear
+- 391  cd ~/desktop/TAL/Plurital
+- 392  git clone git@github.com:yinbozhao-spec/PPE1-2025.git
+- 393  cd PPE-2025/
+- 394  cd ./PPE-2025/
+- 395  cd PPE1-2025
+- 396  git status
+- 397  git log
+- 398  q
+- 399  history
+- 400  git status
+- 401  git tag -a gitinto -m "version finie intro git"\n
+- 402  git tag
+- 403  git push origin gitinto
 
 **Difficultés et résolutions**
 - Avant de faire ces exercices, j'ai bien révisé les diapos et refait l'arborescence que nous avons corrigée lors du dernier cours. Grâce à cette révision, je retiens les notions déjà vues, par exemple :
