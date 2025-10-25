@@ -1,6 +1,49 @@
 # Journal de bord du projet encadré
 # PPE1-2025
-Dépôt individuel de PPE pour l'année 2025-2026.
+
+## Séance 1 
+### Les couches d'un ordinateur 
+Les couches d’un ordinateur : hardware, kernel, shell, utilities.
+### Le système de fichiers – Les chemin 
+/ désigne la racine de l’arbre 
+∼/ désigne le dossier personnel de l’utilisateur ( “HOME") 
+./ désigne le dossier courant (working directory) 
+../ désigne le dossier parent
+#### Chemin absolu et chemin relatif
+/home/pierre/PPE1 désigne un chemin **absolu** (indique la position d’un fichier en partant de la racine)
+**../../dev/input/mouse3** désigne un chemin **relatif** (indique la position d’un fichier en partant du dossier courant)
+Au début, c'était difficile de comprendre la différence entre le chemin absolu et le chemin relatif. Mais les deux exemples m'aident à la comprendre enfin.
+#### Jokers
+? peut remplacer n’importe quel caractère (unique) 
+* peut remplacer n’importe quelle suite de caractères
+### Github
+Fichiers : les fichiers sont dans un dossier.
+### Les commandes
+#### Se promener dans l’arbre
+pwd print working directory
+ls lister le contenu d’un dossier
+cd change directory
+#### Copier, déplacer, supprimer ou créer des fichiers
+cp copier
+mv move déplacer
+rm remove supprimer
+mkdir make directory créer un dossier
+touch crée un fichier (effet de bord bien pratique)
+zip compresser une archive zip
+unzip décompresser une archive zip
+tar manipuler les archives tar
+#### Voir et manipuler le contenu des fichiers
+file donne des informations sur le type de fichier
+cat lit le contenu d’un ou plusieurs fichiers
+head lit le début d’un fichier
+tail lit la fin d’un fichier
+cut sélectionne une ou plusieurs colonnes dans un fichier tabulé
+less lecteur (interactif)
+
+Et surtout: man
+La plupart des commandes ont aussi une option --help qui permet d’obtenir une description concise du fonctionnement et des option de la
+commande
+
 ## Travail du 6 octobre 2025 
 **Créer le dépôt dupuis Github**
 **Code**
