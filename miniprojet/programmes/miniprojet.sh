@@ -16,7 +16,7 @@ while read -r url; do
 
     if [[ ! "$url" =~ ^https?:// ]]; then
         echo -e "${lineno}\t${url}\tN/A\tN/A\t0\tINVALID_URL" >> "$output_file"
-        ((lineno++))
+        lineno=$((lineno+1))
         continue
     fi
 
