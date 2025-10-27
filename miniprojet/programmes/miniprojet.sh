@@ -44,7 +44,7 @@ while read -r url; do
 
     echo -e "${lineno}\t${url}\t${code}\t${encoding}\t${words}\tOK" >> "$output_file"
 
-    ((lineno++))
+        lineno=$((lineno+1))
     sleep 1
 done < "$input_file"
 
