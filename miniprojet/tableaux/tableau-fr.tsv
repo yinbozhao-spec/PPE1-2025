@@ -5,11 +5,11 @@ UTF-8	   13928	OK
 UTF-8	    4134	OK
 3	fr.wikipedia.org/wiki/Robot_d%27indexation	N/A	N/A	0	INVALID_URL
 4	https://fr.wikipedia.org/wiki/Bot_informatique	200	
-UTF-8	    6544	OK
+UTF-8	    6546	OK
 5	https://fr.wikipedia.org/wiki/Atlas_(robot)	200	
 UTF-8	    4019	OK
 6	https://roboty.magistry.fr	000	N/A	0	ERROR
 7	https://fr.wikipedia.org/wiki/Robot_(Leonard_de_Vinci)	404	N/A	0	ERROR
-8	https://fr.wiktionary.org/wiki/robot	200	utf-8	     264	OK
+8	https://fr.wiktionary.org/wiki/robot	200	utf-8	   17789	OK
 9	https://fr.wikipedia.org/wiki/Protocole_d%27exclusion_des_robots	200	utf-8	     264	OK
 10	https://fr.wikipedia.org/wiki/Robotique	200	utf-8	     264	OK
