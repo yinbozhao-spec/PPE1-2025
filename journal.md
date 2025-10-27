@@ -47,7 +47,7 @@ commande
 ## Travail du 6 octobre 2025 
 **Créer le dépôt dupuis Github**
 **Code**
-'''bash
+```bash
 - 388  git clone git@github.com:yinbozhao-spec/PPE1-2025.git
 - 389  clean
 - 390  clear
@@ -64,6 +64,7 @@ commande
 - 401  git tag -a gitinto -m "version finie intro git"\n
 - 402  git tag
 - 403  git push origin gitinto
+```
 
 **Difficultés et résolutions**
 - Avant de faire ces exercices, j'ai bien révisé les diapos et refait l'arborescence que nous avons corrigée lors du dernier cours. Grâce à cette révision, je retiens les notions déjà vues, par exemple :
@@ -77,4 +78,45 @@ commande
 - Enfin, quand j'ai commencé les exercices, j'ai mal tapé `clear` pour effacer les anciens codes. Ensuite, j'ai trouvé que je connais pas très bien les commandes comme "git status, git log, git tag et git bush". 
   
 - Cependant, pour le moment, je ne connais pas bien Markdown, parce que c'est la première fois que j'utilise.
+
+
+
+# Séance 4
+```bash
+#!/usr/bin/bash
+
+# Vérifie si un argument a été passé au script
+# $# représente le nombre d'arguments. 
+# Si le nombre d'arguments n'est pas égal à 1, un message est affiché et le script s'arrête.
+if [ $# -ne 1 ]; then
+  echo "ce programme demande un argument"
+  exit
+fi
+
+# On assigne le premier argument à la variable FICHIER_URLS
+FICHIER_URLS=$1
+
+# Initialisation des compteurs
+OK=0
+NOK=0
+
+# Boucle WHILE : lit chaque ligne du fichier FICHIER_URLS
+# -r empêche read d'interpréter les caractères d'échappement comme "\"
+while read -r LINE; do
+  echo "la ligne : $LINE"
+  
+  # Vérifie si la ligne correspond à une URL valide (http:// ou https://)
+  # =~ est l'opérateur de correspondance avec expression régulière en Bash
+  if [[ $LINE =~ ^https?:// ]]; then
+    echo "ressemble à une URL valide"
+    OK=$(expr $OK + 1)    # Incrémente le compteur OK
+  else
+    echo "ne ressemble pas à une URL valide"
+    NOK=$(expr $NOK + 1)  # Incrémente le compteur NOK
+  fi
+done < $FICHIER_URLS  # Redirection : le contenu du fichier FICHIER_URLS est utilisé comme entrée de la boucle
+
+# Affiche le total d'URLs valides et de lignes douteuses
+echo "$OK URLs et $NOK lignes douteuses"
+```
 
