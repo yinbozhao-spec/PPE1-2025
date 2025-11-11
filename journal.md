@@ -240,5 +240,79 @@ echo "Finished. Results saved to $output_file"
 ```
 
 
+# Séance 6
+## Revue du miniprojet-1
+```bash
+if [ $# -ne 2 ]
+then
+	echo "Le script attend deux arguments : le chemin vers le fichier d'URL et le chemin vers le fichier de sortie"
+	exit
+fi
+
+FICHIER_URL=$1
+FICHIER_SORTIE=$2
+
+lineno=1
+while read -r line;
+do
+    data=$(curl -I -L -w "%{http_code}\t%{content_type}" -o /dev/null -s "${line}")
+
+    http_code=$(echo "$data" | cut -f1)
+    content_type=$(echo "$data" | cut -f2)
+
+    encodage=$(echo "$content_type" | grep -E -o "charset=[^;]*" | cut -d= -f2)
+
+    word_count=$(curl -s -L "$line" | lynx -dump -stdin -nolist | wc -w)
+
+    echo -e "${lineno}\t${line}\t${http_code}\t${encodage}\t${word_count}"
+    lineno=$(expr $lineno + 1 )
+done < "$FICHIER_URL" > "$FICHIER_SORTIE"
+```
+
+J’ai refait le script en suivant le contenu du cours, et j’ai remarqué quelques points :
+1.
+```bash
+ data=$(curl -I -L -w "%{http_code}\t%{content_type}" -o /dev/null -s "${line}")
+```
+Dans cette ligne, l’option `-o /dev/null` envoie le contenu de la page dans un “trou noir”. Si on change en `-o temp.txt`, le contenu serait sauvegardé dans un fichier, ce qui pourrait servir pour calculer le nombre de mots. Mais le problème est que ce fichier ne contient que l’en-tête (HEAD) de la page et non le corps du texte. Donc, pour calculer le nombre de mots, on ne peut pas utiliser ce fichier. D’où l’utilisation directe de `$line` dans :  
+```bash
+   word_count=$(curl -s -L "$line" | lynx -dump -stdin -nolist | wc -w)
+```
+2. Un autre point source de confusion concerne l’usage de `\t` et `\n` :
+```bash
+data=$(curl -I -L -w "%{http_code}\t%{content_type}" -o /dev/null -s "${line}")
+```
+Le `-cut` par défaut utilise le caractère de tabulation `\t` comme séparateur d'espace. Au départ, j’avais utilisé `\n`, ce qui rendait le script incorrect. Après correction en `\t`, le script fonctionne correctement.
+
+## Miniprojet-2
+Cette fois, le projet consiste à transformer le fichier TSV généré en fichier HTML. Au départ, j’avais essayé de simplement combiner le script du miniprojet-1 avec un script HTML séparé, ce qui nécessitait quatre variables en entrée. Ensuite, j’ai réalisé qu’il était plus simple : on peut directement utiliser le fichier fr.txt comme fichier d’entrée et produire directement un fichier HTML en sortie.
+```bash
+if [ $# -ne 2 ]; then
+    echo "Le script attend deux arguments : fichier URL et fichier HTML de sortie"
+    exit
+fi
+
+FICHIER_URL=$1
+FICHIER_SORTIE_HTML=$2
+
+echo "<table border='1'><tr><th>lineno</th><th>URL</th><th>HTTP_Code</th><th>Encodage</th><th>Word_count</th></tr>" > "$FICHIER_SORTIE_HTML"
+
+lineno=1
+while read -r line; do
+    data=$(curl -I -L -w "%{http_code}\t%{content_type}" -o /dev/null -s "${line}")
+    http_code=$(echo "$data" | cut -f1)
+    content_type=$(echo "$data" | cut -f2)
+    encodage=$(echo "$content_type" | grep -E -o "charset=[^;]*" | cut -d= -f2)
+    word_count=$(curl -s -L "$line" | lynx -dump -stdin -nolist | wc -w)
+
+    echo "<tr><td>$lineno</td><td>$line</td><td>$http_code</td><td>$encodage</td><td>$word_count</td></tr>" >> "$FICHIER_SORTIE_HTML"
+    lineno=$((lineno+1))
+done < "$FICHIER_URL"
+
+echo "</table>" >> "$FICHIER_SORTIE_HTML"
+```
+
+
+
 
 
