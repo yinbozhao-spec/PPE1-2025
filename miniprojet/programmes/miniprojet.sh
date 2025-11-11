@@ -1,52 +1,24 @@
-#!/bin/bash
-
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 fichier_url"
-    exit 1
+if [ $# -ne 2 ]
+then
+	echo "Le script attend un argument : le chemin vers le fichier d'URL et le chemin vers le fichier de sortie"
+	exit
 fi
 
-input_file="$1"
-output_file="tableau-fr.tsv"
-
-echo -e "Line\tURL\tHTTP_Code\tEncoding\tWord_Count\tStatus" > "$output_file"
+FICHIER_URL=$1
+FICHIER_SORTIE=$2
 
 lineno=1
+while read -r line;
+do
+    data=$(curl -I -L -w "%{http_code}\t%{content_type}" -o /dev/null -s "${line}")
 
-while read -r url; do
+    http_code=$(echo "$data" | cut -f1)
+    content_type=$(echo "$data" | cut -f2)
 
-    if [[ ! "$url" =~ ^https?:// ]]; then
-        echo -e "${lineno}\t${url}\tN/A\tN/A\t0\tINVALID_URL" >> "$output_file"
-        lineno=$((lineno+1))
-        continue
-    fi
+    encodage=$(echo "$content_type" | grep -E -o "charset=[^;]*" | cut -d= -f2)
 
-    code=$(curl -o /dev/null -s -w "%{http_code}" -L "$url")
+    word_count=$(curl -s -L "$line" | lynx -dump -stdin -nolist | wc -w)
 
-    if [ "$code" -eq 429 ]; then
-        sleep 2
-        code=$(curl -o /dev/null -s -w "%{http_code}" -L "$url")
-    fi
-
-    if [ "$code" -ne 200 ]; then
-        encoding="N/A"
-        words=0
-        echo -e "${lineno}\t${url}\t${code}\t${encoding}\t${words}\tERROR" >> "$output_file"
-        lineno=$((lineno+1))
-        continue
-    fi
-
-    encoding=$(curl -sI -L "$url" | grep -i "Content-Type" | awk -F'charset=' '{print $2}')
-    if [ -z "$encoding" ]; then
-        encoding="N/A"
-    fi
-
-    words=$(curl -s -L "$url" | wc -w)
-
-    echo -e "${lineno}\t${url}\t${code}\t${encoding}\t${words}\tOK" >> "$output_file"
-
-        lineno=$((lineno+1))
-    sleep 1
-done < "$input_file"
-
-echo "Finished. Results saved to $output_file"
-
+    echo -e "${lineno}\t${line}\t${http_code}\t${encodage}\t${word_count}"
+    lineno=$(expr $lineno + 1 )
+done < "$FICHIER_URL" > "$FICHIER_SORTIE"
