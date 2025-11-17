@@ -1,0 +1,8 @@
+#!/bin/bash
+cd ~/desktop/TAL/Exercice1/ann
+Echo "Nombre de lieu en 2016:"
+cat 2016/2016*.ann | grep Location | wc -l
+Echo "Nombre de lieu en 2017:"
+cat 2017/2017*.ann | grep Location | wc -l
+Echo "Nombre de lieu en 2018:"
+cat 2018/2018*.ann | grep Location | wc -l

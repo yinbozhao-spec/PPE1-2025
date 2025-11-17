@@ -1,0 +1,6 @@
+Nombre de lieu en 2016:
+    3144
+Nombre de lieu en 2017:
+    2466
+Nombre de lieu en 2018:
+    3110
