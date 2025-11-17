@@ -1,24 +1,76 @@
-if [ $# -ne 2 ]; then
-    echo "Le script attend deux arguments : fichier URL et fichier HTML de sortie"
-    exit
+#!/usr/bin/env bash
+
+if [ $# -ne 1 ]
+then
+	echo "Le script attend exactement un argument"
+	exit 1
 fi
 
-FICHIER_URL=$1
-FICHIER_SORTIE_HTML=$2
+fichier_urls=$1
 
-echo "<table border='1'><tr><th>lineno</th><th>URL</th><th>HTTP_Code</th><th>Encodage</th><th>Word_count</th></tr>" > "$FICHIER_SORTIE_HTML"
+echo "
+<html lang='fr'>
+<head>
+  <meta charset='UTF-8'/>
+  <title>Tableau</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/versions/bulma-no-dark-mode.min.css'>
+</head>
+<body>
+  <section class='section has-background-grey'>
+    <div class='table-container has-background-white'>
+     <div class='hero has-text-centered'>
+      <div class='hero-body'>
+       <h1 class='title'>Tableau</h1>
+      </div>
+     </div>
+
+     <table class='table is-bordered is-striped is-narrow is-hoverable is-fullwidth'>
+      <thead>
+       <tr class='is-selected'>
+        <th>Numéro</th>
+        <th>URL</th>
+        <th>Code</th>
+        <th>Encodage</th>
+        <th>Nombre de mots</th>
+       </tr>
+      </thead>
+      <tbody>" > tableaux/tableau-fr.html
 
 lineno=1
-while read -r line; do
-    data=$(curl -I -L -w "%{http_code}\t%{content_type}" -o /dev/null -s "${line}")
-    http_code=$(echo "$data" | cut -f1)
-    content_type=$(echo "$data" | cut -f2)
-    encodage=$(echo "$content_type" | grep -E -o "charset=[^;]*" | cut -d= -f2)
-    word_count=$(curl -s -L "$line" | lynx -dump -stdin -nolist | wc -w)
+while read -r line
+do
+	data=$(curl -s -i -L -w "%{http_code}\n%{content_type}" -o ./.data.tmp "$line")
+	http_code=$(echo "$data" | head -1)
+	encoding=$(echo "$data" | tail -1 | sed -n 's/.*charset=\([^ ]*\).*/\1/p')
 
-    echo "<tr><td>$lineno</td><td>$line</td><td>$http_code</td><td>$encodage</td><td>$word_count</td></tr>" >> "$FICHIER_SORTIE_HTML"
-    lineno=$((lineno+1))
-done < "$FICHIER_URL"
+	if [ -z "${encoding}" ]
+	then
+		encoding="N/A"
+	fi
 
-echo "</table>" >> "$FICHIER_SORTIE_HTML"
+	nbmots=$(cat ./.data.tmp | lynx -dump -nolist -stdin | wc -w)
+
+	echo -e "
+    <tr>
+     <td>$lineno</td>
+     <td>$line</td>
+     <td>$http_code</td>
+     <td>$encoding</td>
+     <td>$nbmots</td>
+    </tr>" >> tableaux/tableau-fr.html
+
+	lineno=$(expr $lineno + 1)
+done < "$fichier_urls"
+
+echo "
+      </tbody>
+     </table>
+	</div>
+  </section>
+</body>
+</html>" >> tableaux/tableau-fr.html
+
+
+rm ./.data.tmp
 
