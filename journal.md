@@ -314,5 +314,36 @@ echo "</table>" >> "$FICHIER_SORTIE_HTML"
 
 
 
+# Séance 7
+Quand je faisais les exercices du miniprojet-3, j'ai rencontré deux problèmes : 
+
+Premièrement, lorsque j'écrivais le script pour créer une page HTML, je voulais que la page s'affiche avec un fond gris et un bloc blanc principal, mais cela ne fonctionnait pas. Après plusieurs vérifications, j'ai trouvé la source du problème : c'était très simple, ce sont les guillemets que j'avais utilisés après "echo". Il faut utiliser des apostrophes à l'intérieur.
+
+```bash
+echo "
+
+<html lang='fr'>
+<head>
+ <meta charset='UTF-8'/>
+  <title>Tableau</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/versions/bulma-no-dark-mode.min.css'>
+</head>
+<body>
+ <section class='section has-background-grey'>
+  <div class='container has-background-white'>
+   <div class='hero has-text-centered'>
+    <div class='hero-body'>
+     <h1 class='title'>Miniprojet</h1>
+```
+Deuxièmement, lorsque je voulais déployer la page sur GitHub, cela n'a pas fonctionné. Au début, je pensais que c'était un problème de wifi, mais après plusieurs heures d'attente, cela ne fonctionnait toujours pas. Ensuite, j'ai trouvé les codes d'erreur suivants :
+```bash
+Error: fatal: No url found for submodule path 'Exercices/Exercice1/ann' in .gitmodules
+Error: The process '/usr/bin/git' failed with exit code 128
+```
+J'ai donc supprimé le document .gitmodules. Après cela, tout a fonctionné.
+
+
+
 
 
